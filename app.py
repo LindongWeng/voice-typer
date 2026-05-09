@@ -192,6 +192,8 @@ class VoiceTyperApp(rumps.App):
                 self._q("notify", "已复制到剪贴板", "请手动 Cmd+V 粘贴")
 
         except Exception as e:
+            import traceback
+            print(f"[_process 异常]\n{traceback.format_exc()}", flush=True)
             self._q("overlay_hide")
             self._q("notify", "出错", str(e))
         finally:

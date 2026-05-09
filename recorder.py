@@ -47,6 +47,12 @@ class Recorder:
             return None
 
         audio = np.concatenate(frames, axis=0)
+
+        # 峰值归一化：无论说话音量大小，都拉到 90% 满幅，支持低语模式
+        peak = np.max(np.abs(audio))
+        if peak > 0.001:  # 过滤纯静音
+            audio = audio * (0.9 / peak)
+
         audio_int16 = (audio * 32767).astype(np.int16)
 
         tmp = tempfile.NamedTemporaryFile(suffix=".wav", delete=False)

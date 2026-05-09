@@ -13,7 +13,7 @@ class Transcriber:
 
     def _load_sensevoice(self):
         from funasr import AutoModel
-        print("[Transcriber] 加载 SenseVoice 模型（首次需下载约 300MB）...")
+        print("[Transcriber] 加载 SenseVoice 模型...")
         self.model = AutoModel(
             model="iic/SenseVoiceSmall",
             trust_remote_code=True,
@@ -43,18 +43,18 @@ class Transcriber:
         )
         if not res:
             return ""
-        text = res[0]["text"]
-        # 去掉 SenseVoice 输出的情感标签，如 <|NEUTRAL|><|Speech|><|woitn|>
+        text = res[0].get("text", "")
+        # 去掉 SenseVoice 输出的情绪/事件标签，如 <|zh|><|NEUTRAL|><|Speech|><|woitn|>
         import re
-        text = re.sub(r"<\|[^|]+\|>", "", text).strip()
+        text = re.sub(r"<\|[^|]*\|>", "", text).strip()
         return text
 
     def _transcribe_whisper(self, wav_path: str) -> str:
         segments, _ = self.model.transcribe(
             wav_path,
             language=self.language,
-            beam_size=5,
+            beam_size=7,
             vad_filter=True,
-            initial_prompt="以下是中英文混合的语音转文字内容：",
+            initial_prompt="以下是普通话与英文混合的对话，请用汉字转写中文部分：",
         )
-        return " ".join(seg.text.strip() for seg in segments).strip()
+        return "".join(seg.text for seg in segments).strip()
