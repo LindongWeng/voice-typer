@@ -1,0 +1,10 @@
+faster-whisper
+funasr
+modelscope
+sounddevice
+pyperclip
+pynput
+rumps
+anthropic
+python-dotenv
+numpy

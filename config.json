@@ -1,0 +1,8 @@
+{
+  "engine": "sensevoice",
+  "hotkey": "ctrl+shift",
+  "whisper_model": "base",
+  "whisper_language": null,
+  "polish_enabled": true,
+  "polish_style": "light"
+}
