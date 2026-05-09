@@ -21,14 +21,15 @@ macOS 个人语音听写工具，Typeless / SuperWhisper 的开源平替。
 
 ## 安装
 
-**依赖环境**：macOS，Python 3.10+，Apple Silicon 或 Intel
+**依赖环境**：macOS，Python 3.13（推荐，3.14 下 SenseVoice 有 native crash），Apple Silicon 或 Intel
 
 ```bash
 git clone https://github.com/LindongWeng/voice-typer.git
 cd voice-typer
-python3 -m venv venv
+python3.13 -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt
+pip install torch torchaudio --index-url https://download.pytorch.org/whl/cpu
 ```
 
 **配置 API Key**（Groq 免费注册）：
